@@ -3,6 +3,15 @@ require("dotenv").config();
 const { Telegraf, Markup } = require("telegraf");
 const pool = require("./backend/db/db");
 
+const express = require("express");
+const cors = require("cors");
+const app = express();
+
+app.use(cors({
+  origin: "http://localhost:3000",
+  credentials: true,
+}));
+
 const bot = new Telegraf("7972700389:AAGjjPAH73j1hQPNmMkd2VNRzOaH2vn_lj4");
 
 const userData = {};
@@ -303,3 +312,9 @@ Location: ${job.location}`
 bot.launch();
 
 console.log("Bot running...");
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
